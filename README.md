@@ -15,6 +15,6 @@
 #### 直接解压缩<br/>
 windows 用户可以直接下载Image_Label_Windows.zip，解压缩后，点击LabelImg.exe,即可使用。<br/>
 
-## 标记流程<br/>
+#### 标记流程<br/>
 
 
