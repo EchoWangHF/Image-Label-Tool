@@ -12,3 +12,6 @@
 ### 源码编译<br/>
 软件代码基于Desktop Qt 5.10.0 MinGW 32bit + Qt Creator开发，下载 [src](https://github.com/EchoWangHF/Image-Label-Tool/tree/master/src) 文件夹当中的代码进行编译运行，即可使用。
 
+### 直接解压缩<br/>
+windows 用户可以直接下载Img_Label.zip使用
+
