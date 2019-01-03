@@ -11,8 +11,9 @@ class warning_widget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit warning_widget(QString str,QWidget *parent = nullptr);
+    explicit warning_widget(QWidget *parent = nullptr);
 //    virtual ~warning_widget();
+    void setText(QString str);
 
 private:
     QPushButton * button_ok;
@@ -23,7 +24,6 @@ public slots :
     void Ok_button();
 
 signals:
-    void signals_delete();
 };
 
 #endif // WARNING_WIDGET_H

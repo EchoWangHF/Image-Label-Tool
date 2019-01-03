@@ -98,7 +98,6 @@ private slots:
     void next_button_slots();
     void remove_button_slots();
     bool save_buttion_slots();
-    void warning_wid_slots();
 signals:
     void read_dir_over();
 };

@@ -1,11 +1,11 @@
 #include "warning_widget.h"
 
-warning_widget::warning_widget(QString str,QWidget *parent) : QWidget(parent)
+warning_widget::warning_widget(QWidget *parent) : QWidget(parent)
 {
-    this->setFixedSize(400, 180);
+    this->setFixedSize(400, 200);
     this->setWindowTitle("Warning");
     this->setWindowIcon(QIcon(":/images/3.ico"));
-    this->setStyleSheet("background-color:rgb(211,211,211);");  //设置整个窗口的背景颜色；
+    this->setStyleSheet("background-color:rgb(225, 225, 225);");  //设置整个窗口的背景颜色；
 
     QVBoxLayout *mainlayout = new QVBoxLayout(this);
 
@@ -14,9 +14,9 @@ warning_widget::warning_widget(QString str,QWidget *parent) : QWidget(parent)
     QPixmap pix(":/images/3.ico");
     label_image->setPixmap(pix);
 
-    QFont font_text("ZYSong", 20);
+    QFont font_text("ZYSong", 15);
     label_text = new QLabel(this);
-    label_text->setText(str);
+//    label_text->setText(str);
     label_text->setFont(font_text);
 
     QLabel *label_temp = new QLabel(this);
@@ -41,6 +41,12 @@ warning_widget::warning_widget(QString str,QWidget *parent) : QWidget(parent)
     mainlayout->addLayout(downlayout);
 }
 
+void warning_widget::setText(QString str)
+{
+    label_text->setText(str);
+    this->show();
+}
+
 //warning_widget::~warning_widget()
 //{
 //    qDebug()<<"析构函数";
@@ -48,6 +54,5 @@ warning_widget::warning_widget(QString str,QWidget *parent) : QWidget(parent)
 
 void warning_widget::Ok_button()
 {
-    emit (signals_delete());
-//    this->close();
+    this->hide();
 }

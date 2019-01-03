@@ -7,7 +7,7 @@ Setting_Widget::Setting_Widget(QWidget *parent) :
     ojb_num=0;
     this->resize(400,200);
     this->setWindowTitle("设置");
-    this->setStyleSheet("background-color:rgb(211,211,211);");  //设置整个窗口的背景颜色；
+    this->setStyleSheet("background-color:rgb(225, 225, 225);");  //设置整个窗口的背景颜色；
     this->setWindowIcon(QIcon(":/images/2.ico"));
 
     QFont font("ZYSong", 15);

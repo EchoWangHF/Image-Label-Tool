@@ -135,6 +135,8 @@ Widget::Widget(QWidget *parent)
 
 //    SW=new Setting_Widget();
 
+    WW=new warning_widget();
+    WW->hide();
 
 
     connect(setting,SIGNAL(clicked()),this,SLOT(start_setting()));
@@ -151,6 +153,7 @@ Widget::~Widget()
 {
     delete SW;
     delete imgVision;
+    delete WW;
     //    delete painter;
 }
 
@@ -248,7 +251,7 @@ void Widget::previous_button_slots()
 
 void Widget::next_button_slots()
 {
-    if(save_buttion_slots()){
+    if(save_buttion_slots()||(index==-1)){
         if(sign_object_num==0||sign_object_num!=vec_sign_obj.size()){
     //        imgVision->setText("设置出错，请检查！");
             warning_wid("设置出错，请检查！");
@@ -307,7 +310,7 @@ bool Widget::save_buttion_slots()
 //            qDebug()<<"hehehhehehehehe";
             warning_wid("标记目标数不正确！");
             imgVision->draw_point_vec.clear();
-            false;
+            return false;
         }
         QDir dir;
         dir.cd(file_dir);
@@ -322,12 +325,6 @@ bool Widget::save_buttion_slots()
     else{
         return false;
     }
-}
-
-void Widget::warning_wid_slots()
-{
-    delete WW;
-    return;
 }
 
 void Widget::readImage(QString img_path)
@@ -395,7 +392,5 @@ void Widget::write_xml()
 
 void Widget::warning_wid(QString str)
 {
-    WW=new warning_widget(str);
-    connect(WW,SIGNAL(signals_delete()),this,SLOT(warning_wid_slots()));
-    WW->show();
+    WW->setText(str);
 }
