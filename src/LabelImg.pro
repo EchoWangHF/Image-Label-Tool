@@ -28,15 +28,22 @@ SOURCES += \
         main.cpp \
     setting_widget.cpp \
     widget.cpp \
-    mylable.cpp
+    mylable.cpp \
+    warning_widget.cpp
 
 HEADERS += \
         widget.h \
     setting_widget.h \
     setting_widget.h \
-    mylable.h
+    mylable.h \
+    warning_widget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RC_FILE = App.rc
+
+RESOURCES += \
+    res.qrc

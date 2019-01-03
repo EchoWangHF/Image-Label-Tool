@@ -7,6 +7,9 @@ myLable::myLable(QWidget *parent) : QLabel(parent)
     start_x = 0;
     start_y = 0;
     pushed = false;
+
+    this->setAlignment(Qt::AlignCenter);
+//    this->setFixedSize(x,y);
 }
 
 void myLable::paintEvent(QPaintEvent *event)
@@ -25,7 +28,7 @@ void myLable::paintEvent(QPaintEvent *event)
         }
     }
 
-    update();
+//    update();
 }
 
 void myLable::mousePressEvent(QMouseEvent *event)
@@ -40,6 +43,7 @@ void myLable::mouseMoveEvent(QMouseEvent *event)
     if (pushed == true) {
         mos_x = event->x();
         mos_y = event->y();
+        update();
     }
 }
 

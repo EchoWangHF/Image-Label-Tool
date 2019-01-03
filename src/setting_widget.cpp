@@ -1,5 +1,4 @@
 #include "setting_widget.h"
-#include "ui_setting_widget.h"
 #include <QDebug>
 
 Setting_Widget::Setting_Widget(QWidget *parent) :
@@ -8,6 +7,8 @@ Setting_Widget::Setting_Widget(QWidget *parent) :
     ojb_num=0;
     this->resize(400,200);
     this->setWindowTitle("设置");
+    this->setStyleSheet("background-color:rgb(211,211,211);");  //设置整个窗口的背景颜色；
+    this->setWindowIcon(QIcon(":/images/2.ico"));
 
     QFont font("ZYSong", 15);
 
@@ -88,6 +89,7 @@ void Setting_Widget::sure_num()
 
 void Setting_Widget::overButtonSlot()
 {
+    vec_obv_version.clear();
     for(auto each:line_edit_vec){
         vec_obv_version.push_back(each->text());
     }
