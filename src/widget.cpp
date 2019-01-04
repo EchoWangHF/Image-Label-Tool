@@ -234,7 +234,7 @@ void Widget::previous_button_slots()
         index--;
     }
 
-    ImageNum->setText("标记目标数："+QString::number(index+1));
+    ImageNum->setText("已标记张数："+QString::number(index+1));
     QString img_path=file_dir+"/"+list.at(index).fileName();
     readImage(img_path);
     if(ImageisTag()){
