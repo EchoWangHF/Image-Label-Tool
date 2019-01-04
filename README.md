@@ -16,5 +16,9 @@
 windows 用户可以直接下载Image_Label_Windows.zip，解压缩后，点击LabelImg.exe,即可使用。<br/>
 
 #### 标记流程<br/>
+首先打开软件可以看到以下简陋的界面：<br/>
+![fig1](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png)<br/>
+点击“设置”按钮，填写你需要标记的目标数和目标名称。这个比较重要，因为生成的anontation是按照事先设置的目标顺序和目标名称写成的，如果不够严谨，会影响后续的xml文件的使用。<br/>
+
 
 
