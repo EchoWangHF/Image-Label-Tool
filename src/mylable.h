@@ -20,11 +20,13 @@ class myLable : public QLabel{
     Q_OBJECT
 public:
     explicit myLable(QWidget *parent = nullptr);
+    virtual void paintEvent(QPaintEvent *event) override;
+    std::vector<draw_point> get_vec_draw();
+    void clear_vec_draw();
+private:
     std::vector<draw_point> draw_point_vec;
     int mos_x,mos_y,start_x, start_y;
     bool pushed;
-
-    virtual void paintEvent(QPaintEvent *event) override;
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -34,6 +36,7 @@ protected:
 signals:
 
 public slots:
+    void remove_draw_slots();
 };
 
 #endif // MYLABLE_H

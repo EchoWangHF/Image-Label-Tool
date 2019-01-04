@@ -52,21 +52,16 @@ Widget::Widget(QWidget *parent)
     QFont font("ZYSong", 15);
     QHBoxLayout *mid_layout=new QHBoxLayout(this);
 
-//    imgVision=new QLabel(this);
-//    imgVision=new myLable(this);
-
-//    imgVision->setFrameStyle(QFrame::Box | QFrame::Raised);
-//    imgVision->resize(int(this->width()*0.8),int(this->height()*0.9));
-//    imgVision->setFont(font);
-//    imgVision->setAlignment(Qt::AlignCenter);
-//    mid_layout->addWidget(imgVision);
     WidgetVision=new QFrame(this);
     WidgetVision->setFrameStyle(QFrame::Box | QFrame::Raised);
     WidgetVision->resize(int(this->width()*0.8),int(this->height()*0.9));
     frame_layout=new QGridLayout(WidgetVision);
 
+//    imgVision=nullptr;
     imgVision=new myLable(this);
+    imgVision->hide();
     frame_layout->addWidget(imgVision);
+    connect(this,SIGNAL(remove_draw_signal()),imgVision,SLOT(remove_draw_slots()));
 
     mid_layout->addWidget(WidgetVision);
 
@@ -118,7 +113,7 @@ Widget::Widget(QWidget *parent)
     save=new QPushButton("保存(S)",this);
     save->setFixedSize(60,40);
     save->setStyleSheet("color:white;background-color: gray;");
-//    right_bootom_layout->addStretch(0);
+
     right_bootom_layout->addWidget(remove);
     right_bootom_layout->addWidget(save);
 
@@ -145,8 +140,6 @@ Widget::Widget(QWidget *parent)
     connect(next,SIGNAL(clicked()),this,SLOT(next_button_slots()));
     connect(remove,SIGNAL(clicked()),this,SLOT(remove_button_slots()));
     connect(save,SIGNAL(clicked()),this,SLOT(save_buttion_slots()));
-
-//    connect(this,SIGNAL(remove_button_slots()))
 }
 
 Widget::~Widget()
@@ -154,7 +147,6 @@ Widget::~Widget()
     delete SW;
     delete imgVision;
     delete WW;
-    //    delete painter;
 }
 
 void Widget::keyPressEvent(QKeyEvent *event)
@@ -180,8 +172,6 @@ void Widget::keyPressEvent(QKeyEvent *event)
 }
 
 void Widget::start_setting(){
-//    Setting_Widget *SW=new Setting_Widget();
-//    SW->show();
     SW=new Setting_Widget();
     SW->show();
     connect(SW,SIGNAL(test(int,QVector<QString>)), this, SLOT(return_lineText()));
@@ -232,13 +222,18 @@ void Widget::opendier_slots()
 
 void Widget::previous_button_slots()
 {
-    save_buttion_slots();
+    bool tag=save_buttion_slots();
 
     if(index<=0){
 //        qDebug()<<"\a";
+        warning_wid("已经是第一张了");
         return;
     }
-    index--;
+
+    if(tag){
+        index--;
+    }
+
     ImageNum->setText("标记目标数："+QString::number(index+1));
     QString img_path=file_dir+"/"+list.at(index).fileName();
     readImage(img_path);
@@ -251,65 +246,62 @@ void Widget::previous_button_slots()
 
 void Widget::next_button_slots()
 {
-    if(save_buttion_slots()||(index==-1)){
-        if(sign_object_num==0||sign_object_num!=vec_sign_obj.size()){
-    //        imgVision->setText("设置出错，请检查！");
-            warning_wid("设置出错，请检查！");
-            return;
-        }
 
-        if(list.size()==0){
-            return;
-        }
+    bool tag=save_buttion_slots();
 
-        if(index>=list.size()){
-    //        imgVision->setText("以及是最后一张图片了！");
-            warning_wid("已经是最后一张图片了！");
-            return;
-        }
-
-        index++;
-        ImageNum->setText("标记目标数："+QString::number(index+1));
-        if(index==0){
-            next->setText("下一张(D)");
-        }
-
-        QString img_path=file_dir+"/"+list.at(index).fileName();
-        readImage(img_path);
-        if(ImageisTag()){
-            isTag->setText("已标记");
-        }else{
-            isTag->setText("未标记");
-        }
+    if(sign_object_num==0||sign_object_num!=vec_sign_obj.size()){
+        warning_wid("设置出错，请检查！");
+        return;
     }
-    else{
-        ImageNum->setText("标记目标数："+QString::number(index+1));
-        if(index==0){
-            next->setText("下一张(D)");
-        }
 
-        QString img_path=file_dir+"/"+list.at(index).fileName();
-        readImage(img_path);
-        if(ImageisTag()){
-            isTag->setText("已标记");
-        }else{
-            isTag->setText("未标记");
-        }
+    if(list.size()==0){
+        return;
+    }
+
+    if(index>=list.size()){
+        warning_wid("已经是最后一张图片了！");
+        return;
+    }
+
+    if(tag){
+        index++;
+    }
+
+    ImageNum->setText("标记目标数："+QString::number(index+1));
+    if(index==0){
+        next->setText("下一张(D)");
+    }
+
+    QString img_path=file_dir+"/"+list.at(index).fileName();
+    readImage(img_path);
+    if(ImageisTag()){
+        isTag->setText("已标记");
+    }else{
+        isTag->setText("未标记");
     }
 }
 
 void Widget::remove_button_slots()
 {
-    imgVision->draw_point_vec.pop_back();
+    if(imgVision!=nullptr){
+        emit(remove_draw_signal());
+    }
 }
 
 bool Widget::save_buttion_slots()
 {
-    if(!imgVision->draw_point_vec.empty()){
-        if(int(imgVision->draw_point_vec.size())!=sign_object_num){
+    if(imgVision==nullptr){
+        return true;
+    }
+
+    vec_draw=imgVision->get_vec_draw();
+    imgVision->clear_vec_draw();
+//    delete imgVision;
+    if(!vec_draw.empty()){
+        if(int(vec_draw.size())!=sign_object_num){
 //            qDebug()<<"hehehhehehehehe";
             warning_wid("标记目标数不正确！");
-            imgVision->draw_point_vec.clear();
+            vec_draw.clear();
             return false;
         }
         QDir dir;
@@ -319,11 +311,11 @@ bool Widget::save_buttion_slots()
         }
         XML_file_save_path=file_dir+"/annotation";
         write_xml();
-        imgVision->draw_point_vec.clear();
+        vec_draw.clear();
         return true;
     }
     else{
-        return false;
+        return true;
     }
 }
 
@@ -331,6 +323,7 @@ void Widget::readImage(QString img_path)
 {
 
     img=new QImage;
+    imgVision->show();
     if(!img->load(img_path)){
         imgVision->setText("不是图片，请点击下一张");
     }else{
@@ -360,7 +353,7 @@ bool Widget::ImageisTag()
 
 void Widget::write_xml()
 {
-    if(imgVision->draw_point_vec.size()!=sign_object_num){
+    if(vec_draw.size()!=sign_object_num){
         warning_wid("标记目标数不正确！");
         return;
     }
@@ -377,12 +370,12 @@ void Widget::write_xml()
     writer.writeStartElement("Anontations");
 
 //    assert(imgVision->draw_point_vec.size()==sign_object_num);
-    for(int i=0;i<sign_object_num;++i){
+    for(unsigned int i=0;i<sign_object_num;++i){
         writer.writeStartElement(vec_sign_obj.at(i));
-        writer.writeTextElement("x",QString::number(imgVision->draw_point_vec.at(i).x));
-        writer.writeTextElement("y",QString::number(imgVision->draw_point_vec.at(i).y));
-        writer.writeTextElement("w",QString::number(imgVision->draw_point_vec.at(i).w));
-        writer.writeTextElement("h",QString::number(imgVision->draw_point_vec.at(i).h));
+        writer.writeTextElement("x",QString::number(vec_draw.at(i).x));
+        writer.writeTextElement("y",QString::number(vec_draw.at(i).y));
+        writer.writeTextElement("w",QString::number(vec_draw.at(i).w));
+        writer.writeTextElement("h",QString::number(vec_draw.at(i).h));
         writer.writeEndElement();
     }
     writer.writeEndElement();

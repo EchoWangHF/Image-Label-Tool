@@ -82,6 +82,8 @@ private:
 
     QString XML_file_save_path;
 
+    std::vector<draw_point> vec_draw;
+
     void readImage(QString img_path);
     bool ImageisTag();
     void write_xml();
@@ -100,6 +102,7 @@ private slots:
     bool save_buttion_slots();
 signals:
     void read_dir_over();
+    void remove_draw_signal();
 };
 
 #endif // WIDGET_H
