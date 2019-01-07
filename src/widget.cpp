@@ -144,7 +144,9 @@ Widget::Widget(QWidget *parent)
 
 Widget::~Widget()
 {
-    delete SW;
+    if(SW!=nullptr){
+        delete SW;
+    }
     delete imgVision;
     delete WW;
 }
@@ -163,6 +165,9 @@ void Widget::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_S:
         save_buttion_slots();
+        break;
+    case Qt::Key_Delete:
+        del_img();
         break;
     default:
         break;
@@ -224,7 +229,7 @@ void Widget::previous_button_slots()
 {
     bool tag=save_buttion_slots();
 
-    if(index<=0){
+    if(index==0){
 //        qDebug()<<"\a";
         warning_wid("已经是第一张了");
         return;
@@ -247,6 +252,13 @@ void Widget::previous_button_slots()
 void Widget::next_button_slots()
 {
 
+    if(index==-1){
+        img_filter();
+        if(index>=0){
+             next->setText("下一张(D)");
+        }
+    }
+
     bool tag=save_buttion_slots();
 
     if(sign_object_num==0||sign_object_num!=vec_sign_obj.size()){
@@ -258,7 +270,7 @@ void Widget::next_button_slots()
         return;
     }
 
-    if(index>=list.size()){
+    if((index+1)>=list.size()){
         warning_wid("已经是最后一张图片了！");
         return;
     }
@@ -386,4 +398,75 @@ void Widget::write_xml()
 void Widget::warning_wid(QString str)
 {
     WW->setText(str);
+}
+
+void Widget::del_img()
+{
+//    index=2;
+//    QFileInfoList::iterator it=list.begin();
+
+//    for(auto i:list){
+//        qDebug()<<i;
+//    }
+
+//    qDebug()<<"*****************************";
+
+//    list.erase(it+index);
+
+//    for(auto i:list){
+//        qDebug()<<i;
+//    }
+
+
+    QString del_img_name=file_dir+"/"+list.at(index).fileName();
+    QFile fi(del_img_name);
+    if(fi.exists()){
+        fi.remove();
+    }else{
+        return;
+    }
+
+    if(index==0){
+        next->setText("下一张(D)");
+        QFileInfoList::iterator it=list.begin();
+        list.erase(it+index);
+    }else if(index==list.size()-1){
+        QFileInfoList::iterator it=list.begin();
+        list.erase(it+index);
+        index--;
+    }else{
+        QFileInfoList::iterator it=list.begin();
+        list.erase(it+index);
+    }
+
+    QString img_path=file_dir+"/"+list.at(index).fileName();
+    readImage(img_path);
+    if(ImageisTag()){
+        isTag->setText("已标记");
+    }else{
+        isTag->setText("未标记");
+    }
+}
+
+void Widget::img_filter()
+{
+    QDir dir;
+    dir.cd(file_dir);
+    if(!dir.exists("annotation")){
+        return;
+    }
+
+    QString xml_file_path=file_dir+"/annotation/";
+
+    while(index<list.size()){
+        index++;
+        QString img_name=list.at(index).fileName();
+        QString xml_name=img_name+".xml";
+        QFile file(xml_file_path+xml_name);
+        if(!file.exists()){
+            break;
+        }
+    }
+
+    return;
 }

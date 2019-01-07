@@ -89,6 +89,8 @@ private:
     void write_xml();
     void read_xml();
     void warning_wid(QString str);
+    void del_img();
+    void img_filter();  //过滤掉已经标记过的照片；
 
 //    QPainter *painter;
 
