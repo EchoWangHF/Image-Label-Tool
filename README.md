@@ -19,16 +19,21 @@ Linux环境下，可以先下载安装[Qt 5.10.0](http://download.qt.io/archive/
 
 #### 标记流程<br/>
 （1）首先打开软件可以看到以下简陋的界面：<br/>
-![fig1](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png){:height="50" width="50"}<br/>
 <div align="center">
-<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png" height="100" width="100" >
- </div>
+<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png" height="400" width="600" >
+</div>
 （2）点击“设置”按钮，填写你需要标记的目标数和目标名称。这个比较重要，因为生成的anontation是按照事先设置的目标顺序和目标名称写成的，如果不够严谨，会影响后续的xml文件的使用。<br/>
-![fig2](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/2.png)<br/>
+<div align="center">
+<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/2.png">
+</div>
 （3）点击“添加文件”按钮,选择待标记图片所在的文件夹，必须选择到图片所在目录，因为软件不会检索该目录的子目录。<br/>
-![fig3](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/3.png)<br/>
+<div align="center">
+<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/3.png" height="400" width="600" >
+</div>
 （4）点击“开始标记"按钮，开始标记。按住鼠标左键拖动，则会选择一个矩形框，矩形框框住待标记目标。矩形框的标记顺序也要和预先设置的目标内容相同，比如我设置的标记目标内容分别是车，车标，车牌。那么我的矩形框标记顺序也要是先框车，再框车标，最后框车牌。标记错误，可以点击撤销，撤销标记信息。<br>
-![fig4](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/4.png)<br/>
+<div align="center">
+<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/4.png" height="400" width="600" >
+</div>
 （5）框完所有目标之后，点击保存或者直接点击下一张都行，软件会自动生成一个xml文件，当中保存了标记目标的位置信息。xml文件保存在annotation文件当中，该文件夹存放在源图片所在的文件夹当中。<br>
 （6）备注：如上图所示，软件会表示出该图片是否被标记过，分别显示“已标记”和“未标记”。其中“下一张”，“上一张”,"撤销","保存"设置有键盘快捷键，分为:D,A,W,S。
 
