@@ -10,10 +10,12 @@
 ## 用法<br/>
 
 #### 源码编译<br/>
-软件代码基于Desktop Qt 5.10.0 MinGW 32bit + Qt Creator开发，下载 [src](https://github.com/EchoWangHF/Image-Label-Tool/tree/master/src) 文件夹当中的代码进行编译运行，即可使用。
+软件代码基于Desktop Qt 5.10.0 MinGW 32bit + Qt Creator开发，下载 [src](https://github.com/EchoWangHF/Image-Label-Tool/tree/master/src) 文件夹当中的代码进行编译运行，即可使用。<br/>
 
 #### 直接解压缩<br/>
 windows 用户可以直接下载Image_Label_Windows.zip，解压缩后，点击LabelImg.exe,即可使用。<br/>
+
+Linux环境下，可以先下载安装[Qt 5.10.0](http://download.qt.io/archive/qt/) linux版本，然后打开源码文件，使用Qt creator打开LabelImg.pro文件运行编译软件即可使用。
 
 #### 标记流程<br/>
 （1）首先打开软件可以看到以下简陋的界面：<br/>
