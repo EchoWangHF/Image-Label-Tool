@@ -19,7 +19,10 @@ Linux环境下，可以先下载安装[Qt 5.10.0](http://download.qt.io/archive/
 
 #### 标记流程<br/>
 （1）首先打开软件可以看到以下简陋的界面：<br/>
-![fig1](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png)<br/>
+![fig1](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png){:height="50" width="50"}<br/>
+<div align="center">
+<img src="https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/1.png" height="100" width="100" >
+ </div>
 （2）点击“设置”按钮，填写你需要标记的目标数和目标名称。这个比较重要，因为生成的anontation是按照事先设置的目标顺序和目标名称写成的，如果不够严谨，会影响后续的xml文件的使用。<br/>
 ![fig2](https://github.com/EchoWangHF/Image-Label-Tool/blob/master/images/2.png)<br/>
 （3）点击“添加文件”按钮,选择待标记图片所在的文件夹，必须选择到图片所在目录，因为软件不会检索该目录的子目录。<br/>
