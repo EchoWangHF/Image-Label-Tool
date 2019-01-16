@@ -49,7 +49,7 @@ Widget::Widget(QWidget *parent)
     left_layout->addLayout(left_bottom_layout);
 
 //end **********************************************************
-    QFont font("ZYSong", 15);
+    QFont font("ZYSong", 13);
     QHBoxLayout *mid_layout=new QHBoxLayout(this);
 
     WidgetVision=new QFrame(this);
@@ -253,8 +253,10 @@ void Widget::next_button_slots()
 {
 
     if(index==-1){
-        img_filter();
-        if(index>=0){
+        if(img_filter()==1){
+            warning_wid("已经是最后一张图片了！");
+            return;
+        }else if(index>=0){
              next->setText("下一张(D)");
         }
     }
@@ -311,7 +313,6 @@ bool Widget::save_buttion_slots()
 //    delete imgVision;
     if(!vec_draw.empty()){
         if(int(vec_draw.size())!=sign_object_num){
-//            qDebug()<<"hehehhehehehehe";
             warning_wid("标记目标数不正确！");
             vec_draw.clear();
             return false;
@@ -397,6 +398,7 @@ void Widget::write_xml()
 
 void Widget::warning_wid(QString str)
 {
+    qDebug()<<"yyeyeyeyeyye";
     WW->setText(str);
 }
 
@@ -448,12 +450,12 @@ void Widget::del_img()
     }
 }
 
-void Widget::img_filter()
+int Widget::img_filter()
 {
     QDir dir;
     dir.cd(file_dir);
     if(!dir.exists("annotation")){
-        return;
+        return 0;
     }
 
     QString xml_file_path=file_dir+"/annotation/";
@@ -464,9 +466,13 @@ void Widget::img_filter()
         QString xml_name=img_name+".xml";
         QFile file(xml_file_path+xml_name);
         if(!file.exists()){
+            index--;
             break;
         }
     }
-
-    return;
+    if(index<(list.size()-1)){
+        return 0;
+    }else if(index>=(list.size()-1)){
+        return 1;
+    }
 }
